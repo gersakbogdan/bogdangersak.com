@@ -1,0 +1,14 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { dateLabel } from '../lib/content';
+export async function getStaticPaths() {
+  return (await getCollection('pages')).map((page) => ({ params: { page: page.id }, props: { page } }));
+}
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+<Base title={page.data.title + ' — Bogdan Gersak'} description={page.data.description}>
+  <header class="page-heading"><p class="eyebrow">{page.id === 'now' ? 'A SNAPSHOT, NOT A ROADMAP' : 'BEHIND THE NOTEBOOK'}</p><h1>{page.data.title}<span class="accent">.</span></h1><p>{page.data.description}</p>{page.data.updated && <span class="updated-label">Updated {dateLabel(page.data.updated)}</span>}</header>
+  <div class="prose"><Content /></div>
+</Base>

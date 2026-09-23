@@ -1,0 +1,30 @@
+---
+import { community, commentsEnabled, repositoryUrl } from '../lib/community';
+---
+{commentsEnabled && (
+  <section class="comments-section" aria-labelledby="comments-heading">
+    <h2 id="comments-heading">Join the conversation</h2>
+    <p class="comments-intro">Questions, corrections, or another perspective? Sign in with GitHub to leave a comment.</p>
+    <div class="giscus"></div>
+    <script
+      is:inline
+      src="https://giscus.app/client.js"
+      data-repo={community.repository}
+      data-repo-id={community.giscus.repositoryId}
+      data-category={community.giscus.category}
+      data-category-id={community.giscus.categoryId}
+      data-mapping="pathname"
+      data-strict="1"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="preferred_color_scheme"
+      data-lang="en"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async
+    ></script>
+    <p class="comments-footer"><a href={repositoryUrl + '/discussions'}>All discussions on GitHub ↗</a></p>
+    <noscript><p>Enable JavaScript to read comments here, or visit the discussions on GitHub.</p></noscript>
+  </section>
+)}

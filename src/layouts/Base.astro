@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+import { sections } from '../lib/content';
+interface Props { title?: string; description?: string; noindex?: boolean }
+const {
+  title = 'Bogdan Gersak — Engineering notebook',
+  description = 'Notes on engineering, AI, leadership, and the things I learn while building software.',
+  noindex = false,
+} = Astro.props;
+const pathname = Astro.url.pathname;
+const active = (href: string) => href === '/' ? pathname === '/' : pathname.startsWith(href);
+const canonical = new URL(pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f9f9f6" />
+    <meta name="color-scheme" content="light dark" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a href="/" class="identity" aria-label="Bogdan Gersak — home">
+          <span class="monogram" aria-hidden="true">bg<span>.</span></span>
+          <span>Bogdan Gersak</span>
+        </a>
+        <span class="header-caption"><span class="status-dot" aria-hidden="true"></span> A public engineering notebook</span>
+      </header>
+      <div class="page-grid">
+        <aside class="sidebar">
+          <nav aria-label="Main navigation">
+            <a class:list={['nav-link', { active: active('/') }]} href="/" aria-current={active('/') ? 'page' : undefined}>
+              <span class="nav-mark" aria-hidden="true">⌂</span> Overview
+            </a>
+            <p class="nav-label">THE NOTEBOOK</p>
+            {sections.map((section) => (
+              <a class:list={['nav-link', { active: active('/' + section.slug + '/') }]} href={'/' + section.slug + '/'} aria-current={active('/' + section.slug + '/') ? 'page' : undefined}>
+                <span class="nav-mark" aria-hidden="true">{section.mark}</span>{section.title}
+              </a>
+            ))}
+            <div class="nav-divider"></div>
+            <a class:list={['nav-link', { active: active('/now/') }]} href="/now/" aria-current={active('/now/') ? 'page' : undefined}>
+              <span class="nav-mark" aria-hidden="true">◷</span> Now
+            </a>
+            <a class:list={['nav-link', { active: active('/about/') }]} href="/about/" aria-current={active('/about/') ? 'page' : undefined}>
+              <span class="nav-mark" aria-hidden="true">○</span> About
+            </a>
+          </nav>
+          <div class="sidebar-note"><span class="tiny-line"></span><p>A place for ideas<br />to become useful.</p></div>
+        </aside>
+        <main id="main"><slot /></main>
+      </div>
+      <footer class="site-footer"><span>© {new Date().getFullYear()} Bogdan Gersak</span><span>Always a work in progress.</span><a href="/about/">About this notebook <span aria-hidden="true">↗</span></a></footer>
+    </div>
+  </body>
+</html>

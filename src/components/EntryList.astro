@@ -1,0 +1,24 @@
+---
+import { dateLabel, entryUrl, readingTime, topicTitle, type Entry } from '../lib/content';
+interface Props { entries: Entry[]; emptyText?: string }
+const { entries, emptyText = 'Nothing published here yet. The notebook is just getting started.' } = Astro.props;
+---
+{entries.length ? (
+  <ol class="entry-list">
+    {entries.map((entry) => (
+      <li class="entry-row">
+        <div class="entry-meta">
+          <span class={'type-label type-' + entry.data.type}>{entry.data.type}</span>
+          {entry.data.status === 'draft' && <span class="draft-label">Draft</span>}
+          <span class="entry-date"><time datetime={entry.data.created.toISOString()}>{dateLabel(entry.data.created)}</time></span>
+        </div>
+        <h3><a href={entryUrl(entry)}>{entry.data.title}<span class="entry-arrow" aria-hidden="true">↗</span></a></h3>
+        <p>{entry.data.description}</p>
+        <div class="entry-details">
+          {entry.data.topics.map((topic) => <a href={'/topics/' + topic + '/'}>{topicTitle(topic)}</a>)}
+          <span class="reading-time">{readingTime(entry)} min read</span>
+        </div>
+      </li>
+    ))}
+  </ol>
+) : <div class="empty-state"><span aria-hidden="true">↳</span><p>{emptyText}</p><a href="/">Back to the notebook →</a></div>}
