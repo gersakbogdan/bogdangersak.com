@@ -9,12 +9,8 @@ export const repositoryUrl = community.repository
   ? 'https://github.com/' + community.repository
   : undefined;
 
-const settings = [community.repository, community.giscus.repositoryId, community.giscus.categoryId];
-export const commentsEnabled = settings.every(Boolean);
-
-if ((community.giscus.repositoryId || community.giscus.categoryId) && !commentsEnabled) {
-  throw new Error('Complete all repository and discussion-category IDs before enabling giscus.');
-}
+// Keep the integration configured and ready, but leave comments hidden until launch.
+export const commentsEnabled = false;
 
 export function editUrl(filePath: string) {
   if (!repositoryUrl) return undefined;

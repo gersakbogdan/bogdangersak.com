@@ -64,6 +64,6 @@ See [the writing guide](docs/PUBLISHING.md) for adding notes and publishing upda
 See [the deployment guide](docs/DEPLOYMENT.md) for GitHub, giscus, Cloudflare, and domain setup.
 
 Run npm run deploy:check to validate a deployment without publishing.
-Repository and discussion IDs belong in src/config/community.json; comments stay disabled until those real values are configured.
+Repository and discussion IDs belong in src/config/community.json. Comments are configured but currently disabled in src/lib/community.ts until launch.
 
 The canonical domain is configured in astro.config.mjs and public/robots.txt.
