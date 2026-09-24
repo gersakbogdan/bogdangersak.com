@@ -38,7 +38,7 @@ const canonical = new URL(pathname, Astro.site);
         </a>
         <span class="header-caption"><span class="status-dot" aria-hidden="true"></span> A public engineering notebook</span>
         <details class="mobile-nav">
-          <summary><span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span>Menu</span></summary>
+          <summary aria-label="Open navigation"><span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span></summary>
           <nav aria-label="Mobile navigation">
             <a class:list={['nav-link', { active: active('/') }]} href="/" aria-current={active('/') ? 'page' : undefined}><span class="nav-mark" aria-hidden="true">⌂</span> Overview</a>
             <p class="nav-label">THE NOTEBOOK</p>
