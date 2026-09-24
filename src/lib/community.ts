@@ -11,9 +11,3 @@ export const repositoryUrl = community.repository
 
 // Keep the integration configured and ready, but leave comments hidden until launch.
 export const commentsEnabled = false;
-
-export function editUrl(filePath: string) {
-  if (!repositoryUrl) return undefined;
-  return repositoryUrl + '/edit/' + encodeURIComponent(community.branch) + '/' +
-    filePath.split('/').map(encodeURIComponent).join('/');
-}

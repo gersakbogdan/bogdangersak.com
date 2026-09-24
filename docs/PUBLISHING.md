@@ -58,7 +58,6 @@ Choose whether to keep them in the public source or leave them untracked before 
 
 ## Reader interaction
 
-Published articles have a Suggest an edit link once the repository is configured.
 Comments are configured through giscus, but are currently disabled in `src/lib/community.ts`. Re-enable `commentsEnabled` when you are ready to launch them.
 Draft articles do not load comments or show edit links.
 

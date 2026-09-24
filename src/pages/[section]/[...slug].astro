@@ -2,7 +2,6 @@
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Comments from '../../components/Comments.astro';
-import { editUrl } from '../../lib/community';
 import { getEntries, dateLabel, readingTime, topicTitle, sections } from '../../lib/content';
 export async function getStaticPaths() {
   return (await getEntries()).map((entry) => {
@@ -14,7 +13,6 @@ const { entry } = Astro.props;
 const section = sections.find((item) => item.type === entry.data.type)!;
 const { Content, headings } = await render(entry);
 const toc = headings.filter((heading) => heading.depth === 2);
-const sourceUrl = entry.filePath ? editUrl(entry.filePath) : undefined;
 ---
 <Base title={entry.data.title + ' — Bogdan Gersak'} description={entry.data.description} noindex={entry.data.status === 'draft'}>
   <article>
@@ -28,7 +26,6 @@ const sourceUrl = entry.filePath ? editUrl(entry.filePath) : undefined;
     {toc.length > 1 && <nav class="contents" aria-label="On this page"><p class="eyebrow">ON THIS PAGE</p><ul>{toc.map((heading) => <li><a href={'#' + heading.slug}>{heading.text}</a></li>)}</ul></nav>}
     <div class="prose"><Content /></div>
     <footer class="article-footer">Written in the open. Ideas may evolve.{entry.data.updated && <span> Updated {dateLabel(entry.data.updated)}.</span>}</footer>
-    {entry.data.status === 'published' && sourceUrl && <p class="edit-link"><a href={sourceUrl}>Suggest an edit ↗</a></p>}
     {entry.data.status === 'published' && <Comments />}
   </article>
 </Base>

@@ -14,15 +14,16 @@ html { scrollbar-gutter: stable; }
 @media(prefers-color-scheme:dark){:root{color:#e2e5dc;background:#191c18;--bg:#191c18;--text:#e2e5dc;--muted:#a0a79b;--line:#343a30;--accent:#a6c994;--soft:#242b21}.type-essay{color:#d6ad88}.type-guide{color:#a7c1dc}.type-lab{color:#c1afd6}::selection{background:#485a3d}.status-dot{background:#a6c994}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 .mobile-nav{display:none}
+.site-header{position:relative}
 .menu-icon{display:inline-flex;flex-direction:column;gap:3px;width:16px}.menu-icon i{display:block;width:16px;height:1px;background:currentColor}
 @media(max-width:650px){
   .header-caption{display:none}
   .desktop-nav{display:none!important}
-  .mobile-nav{display:block;margin-bottom:0}
+  .site-header .mobile-nav{display:block;margin-left:auto;position:relative}
   .mobile-nav summary{display:flex;align-items:center;gap:9px;width:max-content;list-style:none;padding:8px 9px;color:var(--muted);font-size:12px;cursor:pointer;border-radius:5px}
   .mobile-nav summary::-webkit-details-marker{display:none}
   .mobile-nav summary:hover,.mobile-nav[open] summary{background:var(--soft);color:var(--text)}
-  .mobile-nav nav{display:flex;flex-direction:column;gap:3px;padding-top:7px}
+  .mobile-nav nav{display:flex;flex-direction:column;gap:3px;padding:10px;position:absolute;right:0;top:calc(100% + 8px);z-index:5;min-width:190px;background:var(--bg);border:1px solid var(--line);border-radius:6px;box-shadow:0 12px 28px rgba(26,35,25,.08)}
   .mobile-nav .nav-label{display:block;margin:15px 9px 4px}
   .mobile-nav .nav-divider{display:block;margin:11px 9px}
   .mobile-nav .nav-link{padding:7px 9px}

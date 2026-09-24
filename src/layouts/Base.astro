@@ -37,6 +37,19 @@ const canonical = new URL(pathname, Astro.site);
           <span>Bogdan Gersak</span>
         </a>
         <span class="header-caption"><span class="status-dot" aria-hidden="true"></span> A public engineering notebook</span>
+        <details class="mobile-nav">
+          <summary><span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span>Menu</span></summary>
+          <nav aria-label="Mobile navigation">
+            <a class:list={['nav-link', { active: active('/') }]} href="/" aria-current={active('/') ? 'page' : undefined}><span class="nav-mark" aria-hidden="true">⌂</span> Overview</a>
+            <p class="nav-label">THE NOTEBOOK</p>
+            {sections.map((section) => (
+              <a class:list={['nav-link', { active: active('/' + section.slug + '/') }]} href={'/' + section.slug + '/'} aria-current={active('/' + section.slug + '/') ? 'page' : undefined}><span class="nav-mark" aria-hidden="true">{section.mark}</span>{section.title}</a>
+            ))}
+            <div class="nav-divider"></div>
+            <a class:list={['nav-link', { active: active('/now/') }]} href="/now/" aria-current={active('/now/') ? 'page' : undefined}><span class="nav-mark" aria-hidden="true">◷</span> Now</a>
+            <a class:list={['nav-link', { active: active('/about/') }]} href="/about/" aria-current={active('/about/') ? 'page' : undefined}><span class="nav-mark" aria-hidden="true">○</span> About</a>
+          </nav>
+        </details>
       </header>
       <div class="page-grid">
         <aside class="sidebar">
@@ -58,19 +71,6 @@ const canonical = new URL(pathname, Astro.site);
               <span class="nav-mark" aria-hidden="true">○</span> About
             </a>
           </nav>
-          <details class="mobile-nav">
-            <summary><span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span>Menu</span></summary>
-            <nav aria-label="Mobile navigation">
-              <a class:list={['nav-link', { active: active('/') }]} href="/" aria-current={active('/') ? 'page' : undefined}><span class="nav-mark" aria-hidden="true">⌂</span> Overview</a>
-              <p class="nav-label">THE NOTEBOOK</p>
-              {sections.map((section) => (
-                <a class:list={['nav-link', { active: active('/' + section.slug + '/') }]} href={'/' + section.slug + '/'} aria-current={active('/' + section.slug + '/') ? 'page' : undefined}><span class="nav-mark" aria-hidden="true">{section.mark}</span>{section.title}</a>
-              ))}
-              <div class="nav-divider"></div>
-              <a class:list={['nav-link', { active: active('/now/') }]} href="/now/" aria-current={active('/now/') ? 'page' : undefined}><span class="nav-mark" aria-hidden="true">◷</span> Now</a>
-              <a class:list={['nav-link', { active: active('/about/') }]} href="/about/" aria-current={active('/about/') ? 'page' : undefined}><span class="nav-mark" aria-hidden="true">○</span> About</a>
-            </nav>
-          </details>
           <div class="sidebar-note"><span class="tiny-line"></span><p>A place for ideas<br />to become useful.</p></div>
         </aside>
         <main id="main"><slot /></main>
