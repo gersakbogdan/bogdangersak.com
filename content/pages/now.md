@@ -13,7 +13,7 @@ updated: 2026-09-23
 ## Building
 
 - This public engineering notebook.
-- Aluzio.
+- [Aluzio](https://aluzio.ai).
 - Small AI engineering experiments.
 
 ## Exploring
