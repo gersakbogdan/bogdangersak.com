@@ -18,6 +18,19 @@ npm run build
 npm run preview
 ```
 
+## Make commands
+
+The Makefile provides short, explicit commands for the common workflow:
+
+```sh
+make check
+make deploy
+make status
+make publish FILES="content/pages/now.md" MESSAGE="Link Aluzio on Now page"
+```
+
+`make publish` builds the site, stages only the paths in `FILES`, commits with `MESSAGE`, pushes `main`, and deploys to Cloudflare. Keeping the file list explicit prevents local draft files from being included accidentally. Use `make commit` when you want to commit without pushing or deploying.
+
 The build checks types and validates frontmatter, then writes the production site to dist/. Production excludes drafts, including their detail routes.
 
 ## Structure
@@ -57,6 +70,16 @@ The four initial draft outlines are starter material for review. The short intro
 /, /notes/, /essays/, /guides/, /labs/, /now/, /about/, /topics/{topic}/, and /{type-folder}/{entry}/. There is also a 404 page and a generated sitemap.
 
 The V1 uses semantic HTML, plain CSS, automatic light/dark appearance, responsive navigation, and a skip link. Fonts use Google Fonts with system fallbacks.
+
+## Responsive layout
+
+The layout has three responsive ranges:
+
+- Above 900px: full two-column layout with the sidebar navigation.
+- 651px–900px: two-column layout with narrower spacing and type.
+- 650px and below: single-column layout. The sidebar links are replaced by the hamburger icon in the header, and the menu opens as a dropdown.
+
+The CSS uses `max-width` media queries, so the mobile layout starts at a viewport width of 650px or less. This is based on available layout space rather than a specific device model; tablets and desktop windows can enter the mobile layout if they are resized below that width.
 
 ## Publish and maintain
 
