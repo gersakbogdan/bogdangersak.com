@@ -8,7 +8,7 @@ export function getStaticPaths() {
 const { topic } = Astro.props;
 const entries = (await getEntries()).filter((entry) => entry.data.topics.some((slug) => slug === topic.slug));
 ---
-<Base title={topic.title + ' — Bogdan Gersak'} description={topic.description}>
+<Base title={topic.title + ' | Bogdan Gersak'} description={topic.description}>
   <header class="page-heading"><a class="back-link" href="/">← The notebook</a><p class="eyebrow">A THREAD I'M FOLLOWING</p><h1>{topic.title}<span class="accent">.</span></h1><p>{topic.description}</p></header>
   <EntryList entries={entries} />
 </Base>

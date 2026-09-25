@@ -1,5 +1,7 @@
 # Writing and publishing
 
+Start with [choosing a writing format](../README.md#choose-a-writing-format) for the differences between Notes, Essays, Guides, and Labs, with examples and guidance for overlap.
+
 ## Add a note
 
 Copy `templates/entry.md` into `content/writing/notes/my-note.md`.
@@ -63,3 +65,38 @@ Draft articles do not load comments or show edit links.
 
 Visitors can read comments without signing in. Posting requires a GitHub account and authorization for giscus.
 Comments and reactions live in GitHub Discussions; moderate them there. Keep Issues for actionable bugs and corrections.
+
+## Homepage and writing index
+
+Edit `content/site/home.md` to update the homepage introduction, headings, link labels,
+Aluzio mention, and Now callout. The introduction is the Markdown body; the other copy
+lives in frontmatter. Keep project descriptions factual and link to the real project
+until a reviewed project story exists. This file renders at `/`, not `/home/`.
+
+The homepage lists the six most recent entries across all four formats. `/writing/`
+combines Notes, Essays, and Guides; Labs remains a separate destination. Both views
+use the existing draft rules. The existing format indexes and article URLs stay stable.
+
+Selected writing is deferred until there is enough published material to support it.
+
+## Project stories
+
+Project stories live in `content/projects/`. Start from `templates/project.md`, set the
+actual creation date, and leave `status: draft` until the story has been reviewed.
+Draft project pages appear only with `npm run dev`; `npm run preview` serves the
+production build and excludes drafts. Projects stays in the main navigation.
+
+An optional `project: aluzio` field on a writing entry associates it with
+`content/projects/aluzio.md`. The project page lists related visible writing, and the
+article links back to the project when that project is visible. The homepage's
+`building.project` field selects its project story; a draft story is never linked
+from the production homepage. Existing external project links remain available.
+
+Set `tab: true` in a project or lab entry to add it to that collection's tabs.
+Optional `tabTitle` provides a shorter label; otherwise the title supplies the label.
+Only projects and labs visible in the current environment become tabs, so drafts appear
+on the development server and disappear from production.
+
+The Aluzio story and workflow note contain explicit prompts where product facts and
+personal observations are still needed. Review those before publishing. Draft status
+hides content from the built site, not from a public Git repository.

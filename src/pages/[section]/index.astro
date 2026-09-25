@@ -1,15 +1,24 @@
 ---
 import Base from '../../layouts/Base.astro';
 import EntryList from '../../components/EntryList.astro';
+import WritingFormats from '../../components/WritingFormats.astro';
+import CollectionTabs from '../../components/CollectionTabs.astro';
+import { getLabTabs } from '../../lib/content';
 import { getEntries, sections } from '../../lib/content';
 export function getStaticPaths() {
   return sections.map((section) => ({ params: { section: section.slug }, props: { section } }));
 }
 const { section } = Astro.props;
 const entries = (await getEntries()).filter((entry) => entry.data.type === section.type);
+const labTabs = section.type === 'lab' ? await getLabTabs() : [];
 ---
-<Base title={section.title + ' — Bogdan Gersak'} description={section.description}>
-  <header class="page-heading"><p class="eyebrow">THE NOTEBOOK</p><h1>{section.title}<span class="accent">.</span></h1><p>{section.description}</p></header>
+<Base title={section.title + ' | Bogdan Gersak'} description={section.description}>
+  <header class="page-heading">
+    <p class="eyebrow">THE NOTEBOOK</p>
+    <h1>{section.title}<span class="accent">.</span></h1>
+    <p>{section.description}</p>
+    {section.type !== 'lab' ? <WritingFormats /> : <CollectionTabs label="Lab sections" tabs={labTabs} />}
+  </header>
   <div class="section-heading"><h2>All {section.title.toLowerCase()}</h2><span class="small-caption">{entries.length} {entries.length === 1 ? 'ENTRY' : 'ENTRIES'}</span></div>
   <EntryList entries={entries} />
 </Base>

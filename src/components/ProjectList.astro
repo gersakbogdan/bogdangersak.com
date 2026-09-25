@@ -1,0 +1,22 @@
+---
+import { projectUrl, type Project } from '../lib/content';
+interface Props { projects: Project[] }
+const { projects } = Astro.props;
+---
+{projects.length ? (
+  <ol class="entry-list">
+    {projects.map((project) => (
+      <li class="entry-row">
+        <div class="entry-meta">
+          <span class="type-label">{project.data.kind}</span>
+          {project.data.status === 'draft' && <span class="draft-label">Draft</span>}
+        </div>
+        <h3><a href={projectUrl(project)}>{project.data.title}<span class="entry-arrow" aria-hidden="true">↗</span></a></h3>
+        <p>{project.data.description}</p>
+        <a class="text-link" href={projectUrl(project)}>Read the project story<span aria-hidden="true">→</span></a>
+      </li>
+    ))}
+  </ol>
+) : (
+  <div class="empty-state"><span aria-hidden="true">◇</span><p>No project stories published yet.</p><a href="/now/">See what I am working on →</a></div>
+)}

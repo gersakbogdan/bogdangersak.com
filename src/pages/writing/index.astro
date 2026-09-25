@@ -1,0 +1,20 @@
+---
+import Base from '../../layouts/Base.astro';
+import EntryList from '../../components/EntryList.astro';
+import WritingFormats from '../../components/WritingFormats.astro';
+import { getWritingEntries, isPreview } from '../../lib/content';
+const entries = await getWritingEntries();
+const hasDrafts = entries.some((entry) => entry.data.status === 'draft');
+---
+<Base title="Writing | Bogdan Gersak" description="Notes, essays, and guides on engineering, AI, leadership, and building.">
+  <header class="page-heading">
+    <p class="eyebrow">THE NOTEBOOK</p>
+    <h1>Writing<span class="accent">.</span></h1>
+    <p>Notes, essays, and guides on software, teams, and the work of building.</p>
+    <WritingFormats />
+    <p class="writing-labs-link">For experiments and their results, explore the <a href="/labs/">labs</a>.</p>
+  </header>
+  <div class="section-heading"><h2>All writing</h2><span class="small-caption">{entries.length} {entries.length === 1 ? 'ENTRY' : 'ENTRIES'}</span></div>
+  {isPreview && hasDrafts && <p class="preview-notice">Local preview · Draft entries appear here for review and are excluded from the production build.</p>}
+  <EntryList entries={entries} />
+</Base>

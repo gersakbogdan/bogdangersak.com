@@ -1,26 +1,58 @@
 ---
+import { render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import EntryList from '../components/EntryList.astro';
-import { getEntries, isPreview, topics } from '../lib/content';
-const entries = await getEntries();
+import { getEntries, getHome, getProjects, isPreview, projectUrl, topics } from '../lib/content';
+const [entries, home, projects] = await Promise.all([getEntries(), getHome(), getProjects()]);
+const { Content } = await render(home);
+const { data } = home;
+const featuredProject = projects.find((project) => project.id === data.building.project?.id);
 const hasDrafts = entries.some((entry) => entry.data.status === 'draft');
 ---
-<Base>
-  <section class="hero">
-    <p class="eyebrow"><span class="short-rule"></span> NOTES FROM THE WORK</p>
-    <h1>Engineering, leadership,<br class="desktop-break" /> and the work in between<span class="accent">.</span></h1>
-    <p class="hero-description">I'm Bogdan, an engineering leader and software builder.<br class="desktop-break" /> This is where I think out loud, connect ideas, and share<br class="desktop-break" /> what I learn along the way.</p>
-    <a class="text-link" href="/about/">A little more about me <span aria-hidden="true">↗</span></a>
+<Base title={data.title} description={data.description}>
+  <section class="hero" aria-labelledby="home-title">
+    <p class="eyebrow"><span class="short-rule" aria-hidden="true"></span>{data.eyebrow}</p>
+    <h1 id="home-title">{data.heading}<span class="accent">.</span></h1>
+    <div class="hero-description"><Content /></div>
+    <div class="hero-actions">
+      <a class="text-link" href="/writing/">{data.writingLabel}<span aria-hidden="true">→</span></a>
+      <a class="text-link" href="#building">{data.buildingLabel}<span aria-hidden="true">↓</span></a>
+    </div>
   </section>
 
   <section class="latest-section" aria-labelledby="latest-title">
-    <div class="section-heading"><h2 id="latest-title">From the notebook</h2><span class="small-caption">IDEAS, IN PROGRESS</span></div>
+    <div class="section-heading"><h2 id="latest-title">{data.notebookHeading}</h2><a class="text-link" href="/writing/">{data.notebookLinkLabel}<span aria-hidden="true">→</span></a></div>
     {isPreview && hasDrafts && <p class="preview-notice">Local preview · Draft entries appear here for review and are excluded from the production build.</p>}
     <EntryList entries={entries.slice(0, 6)} />
   </section>
 
+  <div class="current-work-grid">
+    <section class="building-section" id="building" aria-labelledby="building-title">
+      <div class="section-heading"><h2 id="building-title">{data.building.heading}</h2>{projects.length > 0 && <a class="text-link" href="/projects/">All projects<span aria-hidden="true">→</span></a>}</div>
+      <div class="building-row">
+        {featuredProject?.data.status === 'draft' && <p class="entry-meta"><span class="draft-label">Draft project story</span></p>}
+        <h3>{data.building.name}</h3>
+        <p>{data.building.description}</p>
+        <div class="hero-actions">
+          {featuredProject && <a class="text-link" href={projectUrl(featuredProject)}>Read the project story<span aria-hidden="true">→</span></a>}
+          <a class="text-link" href={data.building.url}>{data.building.linkLabel}<span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+    <section class="building-section experimenting-section" aria-labelledby="experiment-title">
+      <div class="section-heading"><h2 id="experiment-title">{data.experiment.heading}</h2></div>
+      <div class="building-row">
+        <h3>{data.experiment.name}</h3>
+        <p>{data.experiment.description}</p>
+        <div class="hero-actions">
+          <a class="text-link" href={data.experiment.url}>{data.experiment.linkLabel}<span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </div>
+
   <section class="topics-section" aria-labelledby="topics-title">
-    <div class="section-heading"><h2 id="topics-title">Explore by topic</h2></div>
+    <div class="section-heading"><h2 id="topics-title">{data.topicsHeading}</h2></div>
     <div class="topic-grid">{topics.map((topic, i) => (
       <a class="topic-card" href={'/topics/' + topic.slug + '/'}>
         <span class="topic-number">0{i + 1}</span><h3>{topic.title}<span aria-hidden="true">↗</span></h3><p>{topic.description}</p>
@@ -28,5 +60,5 @@ const hasDrafts = entries.some((entry) => entry.data.status === 'draft');
     ))}</div>
   </section>
 
-  <a class="now-callout" href="/now/"><span class="now-icon" aria-hidden="true">◷</span><span><span class="now-title">What I'm up to now</span><span class="now-description">Learning, building, and the questions on my mind.</span></span><span class="now-arrow" aria-hidden="true">→</span></a>
+  <a class="now-callout" href="/now/"><span class="now-icon" aria-hidden="true">◷</span><span><span class="now-title">{data.now.title}</span><span class="now-description">{data.now.description}</span></span><span class="now-arrow" aria-hidden="true">→</span></a>
 </Base>

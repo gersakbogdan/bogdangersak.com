@@ -1,0 +1,6 @@
+---
+import CollectionTabs from './CollectionTabs.astro';
+import { getWritingTabs } from '../lib/content';
+const tabs = await getWritingTabs();
+---
+<CollectionTabs label="Writing formats" tabs={tabs} />

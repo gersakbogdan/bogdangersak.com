@@ -1,0 +1,12 @@
+---
+import type { SectionTab } from '../lib/content';
+interface Props { label: string; tabs: SectionTab[] }
+const { label, tabs } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+<nav class="collection-tabs" aria-label={label}>
+  {tabs.map((tab) => {
+    const active = pathname === tab.href;
+    return <a href={tab.href} aria-current={active ? 'page' : undefined}>{tab.title}</a>;
+  })}
+</nav>

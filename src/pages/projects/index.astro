@@ -1,0 +1,20 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectList from '../../components/ProjectList.astro';
+import CollectionTabs from '../../components/CollectionTabs.astro';
+import { getProjectTabs, getProjects, isPreview } from '../../lib/content';
+const projects = await getProjects();
+const tabs = await getProjectTabs();
+const hasDrafts = projects.some((project) => project.data.status === 'draft');
+---
+<Base title="Projects | Bogdan Gersak" description="Things I am building, the decisions behind them, and what there is to learn along the way.">
+  <header class="page-heading">
+    <p class="eyebrow">FROM THE WORK</p>
+    <h1>Projects<span class="accent">.</span></h1>
+    <p>Things I am building, the decisions behind them, and what there is to learn along the way.</p>
+    <CollectionTabs label="Project sections" tabs={tabs} />
+  </header>
+  <div class="section-heading"><h2>Project stories</h2><span class="small-caption">{projects.length} {projects.length === 1 ? 'PROJECT' : 'PROJECTS'}</span></div>
+  {isPreview && hasDrafts && <p class="preview-notice">Local preview · Draft project stories appear here for review and are excluded from the production build.</p>}
+  <ProjectList projects={projects} />
+</Base>

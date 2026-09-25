@@ -57,6 +57,39 @@ public/
 AGENTS.md
 ```
 
+## Choose a writing format
+
+Choose by what the reader comes for, rather than length or how polished the writing is.
+
+| Format | Main value | Reader expectation |
+| --- | --- | --- |
+| **Notes** | One useful observation or idea | “Here’s something I noticed or learned.” |
+| **Essays** | A developed perspective or argument | “Here’s what I think, and why.” |
+| **Guides** | Help accomplishing or understanding something | “Here’s how to do this, and when it applies.” |
+| **Labs** | An experiment and its evidence | “Here’s what I tried, what happened, and what remains open.” |
+
+### One subject, four formats
+
+These are possible angles on **AI code review**, not claims about completed work:
+
+- **Note:** A useful prompt pattern for reviewing a diff.
+- **Essay:** Why AI review changes the role of human reviewers.
+- **Guide:** How to set up an AI review workflow.
+- **Lab:** Testing a review agent against a set of known bugs.
+
+### When formats overlap
+
+Ask: **Is the main value the observation, the argument, the instruction, or the experiment?** Choose the format that best matches that value.
+
+- **Notes are complete small pieces.** They do not have to grow into essays.
+- **Essays need a central point.** They develop an idea beyond recording a discovery.
+- **Guides help the reader reach an outcome.** Use explanation, steps, examples, and tradeoffs as needed.
+- **Labs document experiments.** Include the question, approach, results, and what remains uncertain. Failed or inconclusive results still belong here.
+
+Format and publication status are separate: every format can be a draft or published. Labs are not a bucket for unfinished writing. Topics describe the subject; formats describe how it is explored.
+
+Choose the folder and matching `type` before publishing. Keep published paths stable because they determine URLs and comment threads.
+
 ## Add writing
 
 Copy templates/entry.md into the matching folder. Set type to note, essay, guide, or lab. Use one or more topics: engineering, ai, leadership, building. Set the created date to the actual date and keep status: draft until the writing is ready.
@@ -90,3 +123,14 @@ Run npm run deploy:check to validate a deployment without publishing.
 Repository and discussion IDs belong in src/config/community.json. Comments are configured but currently disabled in src/lib/community.ts until launch.
 
 The canonical domain is configured in astro.config.mjs and public/robots.txt.
+
+## Homepage and navigation
+
+Homepage copy is Markdown-backed in `content/site/home.md`, in its own `site` collection.
+The main navigation is Writing, Labs, Projects, Now, and About; the full-name logo links
+home. Writing includes All writing, Notes, Essays, and Guides tabs. Labs and Projects
+get tabs from collection entries with `tab: true`; use `tabTitle` for a shorter label.
+See [the publishing guide](docs/PUBLISHING.md#homepage-and-writing-index) for editing details.
+
+Project stories live in `content/projects/` and use the same draft visibility rules as
+writing. Run `npm run dev` to review the draft project stories; production builds exclude them.

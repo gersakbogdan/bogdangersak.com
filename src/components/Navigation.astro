@@ -1,0 +1,29 @@
+---
+import { navigation } from '../lib/content';
+interface Props { label: string; class?: string }
+const { label, class: className } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+<nav aria-label={label} class={className}>
+  {navigation.map((item) => {
+    const active = item.href === '/'
+      ? pathname === '/'
+      : item.href === '/writing/'
+        ? pathname === item.href || ['/notes/', '/essays/', '/guides/'].some((path) => pathname.startsWith(path))
+        : pathname.startsWith(item.href);
+    const exact = pathname === item.href;
+    return (
+      <>
+        {item.href === '/writing/' && <p class="nav-label">THE NOTEBOOK</p>}
+        {item.href === '/now/' && <div class="nav-divider" aria-hidden="true"></div>}
+        <a
+          class:list={['nav-link', { active: exact, 'in-section': active && !exact }]}
+          href={item.href}
+          aria-current={exact ? 'page' : active ? 'location' : undefined}
+        >
+          <span class="nav-mark" aria-hidden="true">{item.mark}</span>{item.title}
+        </a>
+      </>
+    );
+  })}
+</nav>

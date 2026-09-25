@@ -1,14 +1,13 @@
 ---
 import '../styles/global.css';
-import { sections } from '../lib/content';
+import Navigation from '../components/Navigation.astro';
 interface Props { title?: string; description?: string; noindex?: boolean }
 const {
-  title = 'Bogdan Gersak — Engineering notebook',
+  title = 'Bogdan Gersak: Engineering notebook',
   description = 'Notes on engineering, AI, leadership, and the things I learn while building software.',
   noindex = false,
 } = Astro.props;
 const pathname = Astro.url.pathname;
-const active = (href: string) => href === '/' ? pathname === '/' : pathname.startsWith(href);
 const canonical = new URL(pathname, Astro.site);
 ---
 <!doctype html>
@@ -32,50 +31,24 @@ const canonical = new URL(pathname, Astro.site);
     <a class="skip-link" href="#main">Skip to content</a>
     <div class="site-shell">
       <header class="site-header">
-        <a href="/" class="identity" aria-label="Bogdan Gersak — home">
+        <a href="/" class="identity" aria-label="Bogdan Gersak home">
           <span class="monogram" aria-hidden="true">bg<span>.</span></span>
-          <span>Bogdan Gersak</span>
+          <span class="identity-name">Bogdan Gersak</span>
         </a>
         <span class="header-caption"><span class="status-dot" aria-hidden="true"></span> A public engineering notebook</span>
         <details class="mobile-nav">
-          <summary aria-label="Open navigation"><span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span></summary>
-          <nav aria-label="Mobile navigation">
-            <a class:list={['nav-link', { active: active('/') }]} href="/" aria-current={active('/') ? 'page' : undefined}><span class="nav-mark" aria-hidden="true">⌂</span> Overview</a>
-            <p class="nav-label">THE NOTEBOOK</p>
-            {sections.map((section) => (
-              <a class:list={['nav-link', { active: active('/' + section.slug + '/') }]} href={'/' + section.slug + '/'} aria-current={active('/' + section.slug + '/') ? 'page' : undefined}><span class="nav-mark" aria-hidden="true">{section.mark}</span>{section.title}</a>
-            ))}
-            <div class="nav-divider"></div>
-            <a class:list={['nav-link', { active: active('/now/') }]} href="/now/" aria-current={active('/now/') ? 'page' : undefined}><span class="nav-mark" aria-hidden="true">◷</span> Now</a>
-            <a class:list={['nav-link', { active: active('/about/') }]} href="/about/" aria-current={active('/about/') ? 'page' : undefined}><span class="nav-mark" aria-hidden="true">○</span> About</a>
-          </nav>
+          <summary aria-label="Navigation menu"><span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span></summary>
+          <Navigation label="Mobile navigation" />
         </details>
       </header>
       <div class="page-grid">
         <aside class="sidebar">
-          <nav class="desktop-nav" aria-label="Main navigation">
-            <a class:list={['nav-link', { active: active('/') }]} href="/" aria-current={active('/') ? 'page' : undefined}>
-              <span class="nav-mark" aria-hidden="true">⌂</span> Overview
-            </a>
-            <p class="nav-label">THE NOTEBOOK</p>
-            {sections.map((section) => (
-              <a class:list={['nav-link', { active: active('/' + section.slug + '/') }]} href={'/' + section.slug + '/'} aria-current={active('/' + section.slug + '/') ? 'page' : undefined}>
-                <span class="nav-mark" aria-hidden="true">{section.mark}</span>{section.title}
-              </a>
-            ))}
-            <div class="nav-divider"></div>
-            <a class:list={['nav-link', { active: active('/now/') }]} href="/now/" aria-current={active('/now/') ? 'page' : undefined}>
-              <span class="nav-mark" aria-hidden="true">◷</span> Now
-            </a>
-            <a class:list={['nav-link', { active: active('/about/') }]} href="/about/" aria-current={active('/about/') ? 'page' : undefined}>
-              <span class="nav-mark" aria-hidden="true">○</span> About
-            </a>
-          </nav>
+          <Navigation label="Main navigation" class="desktop-nav" />
           <div class="sidebar-note"><span class="tiny-line"></span><p>A place for ideas<br />to become useful.</p></div>
         </aside>
         <main id="main"><slot /></main>
       </div>
-      <footer class="site-footer"><span>© {new Date().getFullYear()} Bogdan Gersak</span><span>Always a work in progress.</span><a href="/about/">About this notebook <span aria-hidden="true">↗</span></a></footer>
+      <footer class="site-footer"><span>© {new Date().getFullYear()} Bogdan Gersak</span><span>Always iterating.</span><a href="/about/">About Bogdan <span aria-hidden="true">↗</span></a></footer>
     </div>
   </body>
 </html>

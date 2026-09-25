@@ -1,11 +1,11 @@
 ---
 title: About
-description: Bogdan Gersak. Engineering leader, software builder, and a work in progress.
+description: Bogdan Gersak. Engineering leader, software builder, always iterating.
 ---
 
-I'm interested in how we build better software, better teams, and useful products.
+I am interested in how we build better software, better teams, and useful products.
 
-This notebook is a place to connect those interests. It covers **engineering**, **AI engineering**, **leadership**, and **building** — often in the same piece.
+This notebook is a place to connect those interests. It covers **engineering**, **AI engineering**, **leadership**, and **building**, often in the same piece.
 
 ## Why a notebook?
 
@@ -17,4 +17,4 @@ The aim is to make what I learn useful beyond the moment I learn it.
 
 Start with the [notes](/notes/) for small ideas, [essays](/essays/) for developed thinking, [guides](/guides/) for deeper explanations, or [labs](/labs/) for experiments.
 
-For a snapshot of my current interests, see [what I'm up to now](/now/).
+For a snapshot of my current interests, see [what I am up to now](/now/).
