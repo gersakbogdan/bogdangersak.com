@@ -1,9 +1,8 @@
 ---
 import { render } from 'astro:content';
-import CollectionTabs from '../../components/CollectionTabs.astro';
 import Base from '../../layouts/Base.astro';
 import Comments from '../../components/Comments.astro';
-import { getEntries, getProjects, getLabTabs, projectUrl, dateLabel, readingTime, topicTitle, sections } from '../../lib/content';
+import { getEntries, getProjects, projectUrl, dateLabel, readingTime, topicTitle, sections } from '../../lib/content';
 export async function getStaticPaths() {
   return (await getEntries()).map((entry) => {
     const [section, ...segments] = entry.id.split('/');
@@ -15,12 +14,10 @@ const project = entry.data.project ? (await getProjects()).find((item) => item.i
 const section = sections.find((item) => item.type === entry.data.type)!;
 const { Content, headings } = await render(entry);
 const toc = headings.filter((heading) => heading.depth === 2);
-const labTabs = entry.data.type === 'lab' ? await getLabTabs() : [];
 ---
 <Base title={entry.data.title + ' | Bogdan Gersak'} description={entry.data.description} noindex={entry.data.status === 'draft'}>
   <article>
-    {entry.data.type !== 'lab' && <a class="back-link" href={'/' + section.slug + '/'}>← All {section.title.toLowerCase()}</a>}
-    {entry.data.type === 'lab' && <CollectionTabs label="Lab sections" tabs={labTabs} />}
+    <a class="back-link" href={'/' + section.slug + '/'}>← All {section.title.toLowerCase()}</a>
     <header class="article-heading">
       <div class="entry-meta"><span class={'type-label type-' + entry.data.type}>{entry.data.type}</span><time datetime={entry.data.created.toISOString()}>{dateLabel(entry.data.created)}</time><span>{readingTime(entry)} min read</span></div>
       <h1>{entry.data.title}</h1><p>{entry.data.description}</p>

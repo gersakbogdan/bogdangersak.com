@@ -35,7 +35,7 @@ const hasDrafts = entries.some((entry) => entry.data.status === 'draft');
         <p>{data.building.description}</p>
         <div class="hero-actions">
           {featuredProject && <a class="text-link" href={projectUrl(featuredProject)}>Read the project story<span aria-hidden="true">→</span></a>}
-          <a class="text-link" href={data.building.url}>{data.building.linkLabel}<span aria-hidden="true">↗</span></a>
+          <a class="text-link" href={data.building.url} target="_blank" rel="noopener noreferrer">{data.building.linkLabel}<span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
